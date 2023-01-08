@@ -1,10 +1,21 @@
 import styled from 'styled-components';
 import { useCartContext } from './context/cart_context';
 import CartItem from './components/CartItem';
+import { json } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const Cart = () => {
+  console.log('+++++++++++++', useCartContext());
   const { cart } = useCartContext();
-  console.log('🚀 ~ file: Cart.js ~ line 6 ~ Cart ~ cart', cart);
+  // const [state, setState] = useState([]);
+  // console.log('🚀 ~ file: Cart.js:11 ~ Cart ~ state', state);
+
+  // useEffect(() => {
+  //   let data = localStorage.getItem('cartItems');
+  //   console.log('🚀 ~ file: Cart.js:15 ~ useEffect ~ data', data);
+  //   setState(JSON.parse(data));
+  // }, []);
   return (
     <Wrapper>
       <div className="container">

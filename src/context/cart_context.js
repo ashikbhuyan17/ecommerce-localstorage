@@ -1,21 +1,31 @@
+import { useEffect } from 'react';
 import { createContext, useContext, useReducer } from 'react';
 import reducer from '../reducer/cartReducer';
 
 const CartContext = createContext();
 
+const getLocalCartData = () => {
+  let localCartData = localStorage.getItem('cartItems');
+
+  if (localCartData === [] || localCartData === null) {
+    return [];
+  } else {
+    return JSON.parse(localCartData);
+  }
+};
+console.log('getLocalCartData', getLocalCartData());
 const initialState = {
-  cart: [],
+  cart: getLocalCartData(),
   total_item: '',
   total_amount: '',
   shipping_fee: 50000,
 };
 
 const CartProvider = ({ children }) => {
-  console.log(
-    '🚀 ~ file: cart_context.js:14 ~ CartProvider ~ children',
-    children
-  );
   const [state, dispatch] = useReducer(reducer, initialState);
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(state.cart));
+  }, [state.cart]);
 
   const addToCart = (id, color, amount, product) => {
     dispatch({ type: 'ADD_TO_CART', payload: { id, color, amount, product } });

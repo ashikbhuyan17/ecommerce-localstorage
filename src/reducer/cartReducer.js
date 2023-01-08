@@ -1,7 +1,40 @@
 const cartReducer = (state, action) => {
-  console.log('🚀 ~ file: cartReducer.js:2 ~ cartReducer ~ state', state);
+  // if (action.type === 'ADD_TO_CART') {
+  //   // console.log('++++++++++++++', action.payload);
+  //   let { id, color, amount, product } = action.payload;
+  //   // console.log(
+  //   //   "🚀 ~ file: cartReducer.js ~ line 4 ~ cartReducer ~ product",
+  //   //   product
+  //   // );
+
+  //   let cartProduct;
+
+  //   cartProduct = {
+  //     id: id + color,
+  //     name: product.name,
+  //     color,
+  //     amount,
+  //     image: product.image[0].url,
+  //     price: product.price,
+  //     max: product.stock,
+  //     subTotal: product.price * amount,
+  //   };
+
+  //   // localStorage.setItem(
+  //   //   'cartItems',
+  //   //   JSON.stringify({
+  //   //     ...state,
+  //   //     cart: [...state.cart, cartProduct],
+  //   //   })
+  //   // );
+
+  //   return {
+  //     ...state,
+  //     cart: [...state.cart, cartProduct],
+  //   };
+  // }
+
   if (action.type === 'ADD_TO_CART') {
-    // console.log('++++++++++++++', action.payload);
     let { id, color, amount, product } = action.payload;
     // console.log(
     //   "🚀 ~ file: cartReducer.js ~ line 4 ~ cartReducer ~ product",
@@ -46,6 +79,7 @@ const cartReducer = (state, action) => {
     //   stepToUpdate,
     //   itemList[stepToUpdate]
     // );
+
     itemList[stepToUpdate] = {
       id: itemList[stepToUpdate].id + itemList[stepToUpdate].color,
       name: itemList[stepToUpdate].name,
@@ -54,7 +88,13 @@ const cartReducer = (state, action) => {
       image: itemList[stepToUpdate].image,
       price: itemList[stepToUpdate].price,
       max: itemList[stepToUpdate].max,
+      subTotal:
+        (itemList[stepToUpdate].amount + 1) * itemList[stepToUpdate].price,
     };
+    localStorage.setItem(
+      'cartItems',
+      JSON.stringify({ ...state, cart: itemList })
+    );
     return { ...state, cart: itemList };
 
     // let updatedCart = state.cart.filter(
